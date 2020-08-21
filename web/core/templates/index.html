@@ -1,9 +1,16 @@
-{% extends 'layouts/base.html' %}
+{% extends 'layouts/base-fullscreen.html' %}
 
 {% block title %} Home {% endblock title %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<style>
+nav {
+ background-image: url("/static/assets/img/index/index_background.jpg");
+ background-color: #cccccc;
+}
+</style>
+{% endblock stylesheets %}
 
 {% block content %}
 
