@@ -5,10 +5,23 @@
 {% block content %}
 
     <!-- Header -->
-    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+    <div class="header bg-gradient-primary pb-8 pt-6 md-8">
       <div class="container-fluid">
         <div class="row">
-          <div class="col">
+          <div class="col-12 mb-3">
+            <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto"></form>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="addon-wrapping"><i class="fas fa-search"></i></span>
+                </div>
+                <input type="text" class="form-control" placeholder="지역구명을 적어주세요. 예) 부산진구" aria-label="Recipient's username" aria-describedby="button-addon2" aria-describedby="addon-wrapping">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="button" id="button-addon2">내 지역구 검색</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col-12">
             <div class="card shadow border-0">
               <div id="map" class="map-canvas" style="height: 600px;"></div>
             </div>
@@ -118,13 +131,49 @@
 {% block javascripts %}
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=47cebf243fb31acc12d9459c8feb0493"></script>
 <script>
-  var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-  var options = { //지도를 생성할 때 필요한 기본 옵션
-    center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-    level: 3 //지도의 레벨(확대, 축소 정도)
-  };
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+    mapOption = { 
+        center: new kakao.maps.LatLng(37.517438, 127.018928), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
 
-  var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+// 마커를 표시할 위치와 title 객체 배열입니다 
+var positions = [
+    {
+        title: '서리풀1', 
+        latlng: new kakao.maps.LatLng(37.517438, 127.018928)
+    },
+    {
+        title: '서리풀2', 
+        latlng: new kakao.maps.LatLng(37.515609, 127.019459)
+    },
+    {
+        title: '서리풀13', 
+        latlng: new kakao.maps.LatLng(37.51545, 127.019466)
+    },
+];
+
+// 마커 이미지의 이미지 주소입니다
+var imageSrc = "/static/assets/img/map/map_marker.png";
+
+for (var i = 0; i < positions.length; i ++) {
+    
+    // 마커 이미지의 이미지 크기 입니다
+    var imageSize = new kakao.maps.Size(45, 61); 
+    
+    // 마커 이미지를 생성합니다    
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+    
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng, // 마커를 표시할 위치
+        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        image : markerImage // 마커 이미지 
+    });
+}
 </script>
 
 {% endblock javascripts %}

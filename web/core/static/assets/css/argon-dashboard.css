@@ -2490,7 +2490,7 @@ textarea.form-control {
 .btn:focus,
 .btn.focus {
   outline: 0;
-  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 7px 14px rgba(50, 93, 52, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
 }
 
 .btn.disabled,
@@ -2533,7 +2533,7 @@ fieldset:disabled a.btn {
 
 .btn-primary:focus,
 .btn-primary.focus {
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(94, 114, 228, 0.5);
+  box-shadow: 0 4px 6px rgba(50, 93, 57, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(94, 114, 228, 0.5);
 }
 
 .btn-primary.disabled,
@@ -2547,14 +2547,14 @@ fieldset:disabled a.btn {
 .btn-primary:not(:disabled):not(.disabled).active,
 .show>.btn-primary.dropdown-toggle {
   color: #fff;
-  background-color: #324cdd;
+  background-color: #226e28;
   border-color: #eebb4d;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active:focus,
 .btn-primary:not(:disabled):not(.disabled).active:focus,
 .show>.btn-primary.dropdown-toggle:focus {
-  box-shadow: none, 0 0 0 0 rgba(94, 114, 228, 0.5);
+  box-shadow: none, 0 0 0 0 rgba(105, 228, 94, 0.5);
 }
 
 .btn-secondary {
@@ -5359,7 +5359,7 @@ input[type="button"].btn-block {
 .badge-primary[href]:focus {
   color: #fff;
   text-decoration: none;
-  background-color: #324cdd;
+  background-color: #226e28;
 }
 
 .badge-secondary {
@@ -5552,7 +5552,7 @@ input[type="button"].btn-block {
 }
 
 .alert-primary .alert-link {
-  color: #324cdd;
+  color: #226e28;
 }
 
 .alert-secondary {
@@ -6827,7 +6827,7 @@ a.bg-primary:hover,
 a.bg-primary:focus,
 button.bg-primary:hover,
 button.bg-primary:focus {
-  background-color: #324cdd !important;
+  background-color: #226e28 !important;
 }
 
 .bg-secondary {
@@ -13056,7 +13056,7 @@ button.bg-darker:focus {
 
 a.text-primary:hover,
 a.text-primary:focus {
-  color: #324cdd !important;
+  color: #226e28 !important;
 }
 
 .text-secondary {
@@ -13311,7 +13311,7 @@ a.bg-blue:hover,
 a.bg-blue:focus,
 button.bg-blue:hover,
 button.bg-blue:focus {
-  background-color: #324cdd !important;
+  background-color: #226e28 !important;
 }
 
 .bg-indigo {
@@ -14581,7 +14581,7 @@ button.section-darker:focus {
 
 a.text-blue:hover,
 a.text-blue:focus {
-  color: #324cdd !important;
+  color: #226e28 !important;
 }
 
 .text-indigo {
@@ -18680,7 +18680,7 @@ article h5+figure {
 .datepicker table tr td.range.disabled,
 .datepicker table tr td.range.disabled:active,
 .datepicker table tr td.range.day.disabled:hover {
-  background: #324cdd;
+  background: #226e28;
   color: #8a98eb;
 }
 
@@ -19438,7 +19438,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 
 .btn-clipboard:hover {
   color: #fff;
-  background-color: #324cdd;
+  background-color: #226e28;
 }
 
 @media (min-width: 768px) {
