@@ -7,7 +7,7 @@
     <!-- Header -->
     <div class="header bg-gradient-primary pb-8 pt-6 md-8">
       <div class="container-fluid">
-        <div class="row">
+        <div class="row row-cols-sm-2">
             <div class="col-xl-6 input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="addon-wrapping"><i class="fas fa-search"></i></span>
@@ -17,9 +17,14 @@
                 <button class="btn btn-primary" type="button" id="button-addon2">내 지역구 검색</button>
               </div>
             </div>
-            <div class="ml-2">
-                <button class="btn btn-secondary">현재 수거함만 보기</button>
-                <button class="btn btn-slack">예상 수거함만 보기</button>
+            <div class="ml-2 row pt-1">
+              <div class="mr-2 mb-2">
+                <button id='preCupOnly' class="btn btn-secondary">현재 수거함만 보기</button>
+                <button id='cellOnly' class="btn btn-secondary">예상 수거함만 보기</button>
+              </div>
+              <div class="col pl-0 pr-4">
+                <button id='both' class="btn btn-slack btn-block ">둘다 보기</button>
+              </div>
             </div>
           <div class="col-12">
             <div class="card shadow border-0 mt-3">
@@ -200,48 +205,124 @@
 
 <!-- Specific JS goes HERE --> 
 {% block javascripts %}
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=47cebf243fb31acc12d9459c8feb0493"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMkWvo1fWXALAlUAbyXEB_lSquL2ibfx0&callback=initMap&region=kr"></script>
 <script type="text/javascript">
   var pc = JSON.parse('{{pc|safe}}');
-  // var pc = JSON.parse('{{pc|safe}}');
-  console.log(pc);
-  var pcPositions = []
-  for(var i in pc){
-    var c = pc[i]["fields"];
-    var point = {
-      title:  pc[i]["pk"],
-      latlng : new kakao.maps.LatLng(c["lat"],c["long"])
-      };
-    pcPositions.push(point)
-  };
+  var df = JSON.parse('{{df|safe}}');
 
-  var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-      mapOption = { 
-          center: new kakao.maps.LatLng(pc[0]["fields"]["lat"], pc[0]["fields"]["long"]), // 지도의 중심좌표
-          level: 3 // 지도의 확대 레벨
-      };
+  let map;
+  let cells;
+  let polygons;
+  let polygon_centers;
+  let pre_cups;
 
-  var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+  function initMap(){
+    var seoul = { lat: 37.5642135 ,lng: 127.0016985 };
+    map = new google.maps.Map( document.getElementById('map'), { zoom: 12, center: seoul });
 
-  // 마커 이미지의 이미지 주소입니다
-  var imageSrc = "/static/assets/img/map/map_marker.png";
-
-  for (var i = 0; i < pcPositions.length; i ++) {
-      
-      // 마커 이미지의 이미지 크기 입니다
-      var imageSize = new kakao.maps.Size(45, 61); 
-      
-      // 마커 이미지를 생성합니다    
-      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
-      
-      // 마커를 생성합니다
-      var marker = new kakao.maps.Marker({
-          map: map, // 마커를 표시할 지도
-          position: pcPositions[i].latlng, // 마커를 표시할 위치
-          title : pcPositions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-          image : markerImage // 마커 이미지 
-      });
+    cells = makeCells();
+    polygons = makePolygons(cells);
+    polygon_centers = makePolygonCenters(cells, map);
+    pre_cups = makePreCups(map);
+    setMapOnAll(pre_cups, map);
+    setMapOnAll(polygon_centers, map);
+    setMapOnAll(polygons, map);
   }
+
+  function makeCells(){
+    var cells = []
+    for(var i in df){
+      coors = df[i]
+      const cellCoords = [
+      { lat: coors['lat1'], lng: coors['long1'] },
+      { lat: coors['lat2'], lng: coors['long2'] },
+      { lat: coors['lat4'], lng: coors['long4'] },
+      { lat: coors['lat3'], lng: coors['long3'] }
+      ];
+      cells.push(cellCoords);
+    }
+    return cells;
+  }
+  
+  function makePolygons(cells){
+    var polygons = [];
+    for(var i in cells){
+      var ploygon = new google.maps.Polygon({
+        paths: cells[i],
+        strokeColor: "#ffe54a",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#ffe54a",
+        fillOpacity: 0.35
+      });
+      polygons.push(ploygon);
+    }
+    return polygons;
+  }
+
+  function makePolygonCenters(cells, map){
+    var polygon_centers = [];
+    const shape = {
+    coords: [1, 1, 1, 20, 18, 20, 18, 1],
+    type: "poly"
+    };
+
+    for(var i in cells){
+      var lat =0.0, long =0.0;
+      for (var j in cells[i]){
+        lat += parseFloat(cells[i][j]['lat']);
+        long += parseFloat(cells[i][j]['lng']);
+      }
+      lat = lat/cells[i].length;
+      long = long/cells[i].length;
+      // console.log(lat, long);
+      var center = new google.maps.Marker({
+        position: { lat: lat, lng: long },
+        map,
+        icon: '/static/assets/img/map/green_cup_resize2.png',
+        shape: shape,
+        title: i,
+        zIndex: parseInt(i)
+      });
+      polygon_centers.push(center);
+    }
+    return polygon_centers;
+  }
+  
+  function makePreCups(map) {
+    var pre_cups=[]
+    const shape = {
+    coords: [1, 1, 1, 20, 18, 20, 18, 1],
+    type: "poly"
+    };
+
+    for (var i in pc) {
+      const precup = pc[i];
+      var pre_cup = new google.maps.Marker({
+        position: { lat: precup['fields']['lat'], lng: precup['fields']['long'] },
+        map,
+        icon: '/static/assets/img/map/orange_cup_resize2.png',
+        shape: shape,
+        title: pc[i]['pk'],
+        zIndex: parseInt(i)
+      });
+      pre_cups.push(pre_cup);
+    }
+    return pre_cups;
+  }
+
+  function setMapOnAll(markers, map){
+    for(var i in markers){
+      markers[i].setMap(map);
+    }
+  }
+
+  // Removes the markers from the map, but keeps them in the array.
+  function clearMarkers() {
+    setMapOnAll(null);
+  }
+  
 </script>
 
 {% endblock javascripts %}
