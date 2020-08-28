@@ -1,7 +1,7 @@
 {% extends 'layouts/base.html' %}
 
 {% block title %} Maps {% endblock title %}
-
+{% block nav %}내 지역구 보기{% endblock nav %}
 {% block content %}
 
     <!-- Header -->
@@ -99,100 +99,77 @@
     </div>
     
     <div class="container-fluid mt-4" >
-      <div id="detail" class="row collapse">
+      <div id="detail" class="row">
         <div class="col-12">
           <div class="card bg-secondary shadow">
             <div class="card-header bg-white border-0">
               <div class="row align-items-center">
-                <div class="col-8">
+                <div class="col-7 col-lg-8">
                   <h3 class="mb-0">장소 상세 정보</h3>
                 </div>
-                <div class="col-4 text-right">
+                <div class="col-4 text-right pl-0">
                   <a class="btn btn-primary toTop">지도로 가기</a>
                 </div>
               </div>
             </div>
             <div class="card-body">
-              <div class="">
-                <div id="staticmap" class="map-canvas" style="height: 350px;"></div>
+              <div class="card shadow border-0 mt-3">
+                <div id="smallmap" class="map-canvas" style="height: 350px;"></div>
               </div>
-              <form class="">
-                <h6 class="heading-small text-muted mb-4">User information</h6>
-                <div class="pl-lg-4">
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-username">Username</label>
-                        <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" 
-                              value="{{ request.user.username }}">
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-email">Email address</label>
-                        <input type="email" id="input-email" class="form-control form-control-alternative" 
-                              placeholder="{{ request.user.email }}">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-first-name">First name</label>
-                        <input type="text" id="input-first-name" class="form-control form-control-alternative" >
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-last-name">Last name</label>
-                        <input type="text" id="input-last-name" class="form-control form-control-alternative" >
+                <h6 class="heading text-muted mt-4">위치 정보</h6>
+                <div class="">
+                  <label>주소</label><p></p>
+                </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="card card-stats mb-4 mb-xl-0">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-auto">
+                          <div class="icon icon-shape bg-success text-white rounded-circle shadow">
+                            <i class="fas fa-laugh-squint"></i>
+                          </div>
+                        </div>
+                        <div class="col align-self-center">
+                          <span class="h2 font-weight-bold">50 명의 사람들이 이 장소를 좋아합니다!</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                <div class="col-lg-6">
+                  <div class="card card-stats mb-4 mb-xl-0">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-auto">
+                          <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                            <i class="far fa-grin-beam-sweat"></i>
+                          </div>
+                        </div>
+                        <div class="col align-self-center">
+                          <span class="h2 font-weight-bold">0 명의 싫어하는 사람들..</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
                 <hr class="my-4" />
                 <!-- Address -->
-                <h6 class="heading-small text-muted mb-4">Contact information</h6>
-                <div class="pl-lg-4">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-address">Address</label>
-                        <input id="input-address" class="form-control form-control-alternative" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" type="text">
-                      </div>
-                    </div>
+                <h6 class="heading text-muted mb-4">이 위치가 마음에 드시나요?</h6>
+                <div class="row row-col-3">
+                  <div class="col">
+                    <button type="button" id="like" class="btn btn-warning btn-block"><i class="far fa-thumbs-up"></i> 좋아요</button>
                   </div>
-                  <div class="row">
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-city">City</label>
-                        <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="New York">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-country">Country</label>
-                        <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="Country" value="United States">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-country">Postal code</label>
-                        <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="Postal code">
-                      </div>
-                    </div>
+                  <div class="col">
+                    <button type="button" id="like" class="btn btn-twitter btn-block"><i class="far fa-thumbs-down"></i> 싫어요</button>
+                  </div>
+                  <div class="col mt-3 mt-md-0">
+                    <button type="button" id="like" class="btn btn-neutral btn-block"><i class="fas fa-pencil-alt"></i> 자세한 의견 작성하러 가기</button>
                   </div>
                 </div>
-                <hr class="my-4" />
-                <!-- Description -->
-                <h6 class="heading-small text-muted mb-4">About me</h6>
-                <div class="pl-lg-4">
-                  <div class="form-group">
-                    <label>About Me</label>
-                    <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ...">A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
-                  </div>
-                </div>
-              </form>
+                
+              
             </div>
           </div>
         </div>
@@ -208,8 +185,11 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMkWvo1fWXALAlUAbyXEB_lSquL2ibfx0&callback=initMap&region=kr"></script>
 <script type="text/javascript">
-  var pc = JSON.parse('{{pc|safe}}');
-  var df = JSON.parse('{{df|safe}}');
+  var presentCups = JSON.parse('{{presentCups|safe}}');
+  var predictCups = JSON.parse('{{predictCups|safe}}');
+
+  // console.log(presentCups);
+  // console.log(predictCups);
 
   let map;
   let cells;
@@ -220,6 +200,7 @@
   function initMap(){
     var seoul = { lat: 37.5642135 ,lng: 127.0016985 };
     map = new google.maps.Map( document.getElementById('map'), { zoom: 12, center: seoul });
+    smallmap = new google.maps.Map( document.getElementById('smallmap'), { zoom: 18, center: seoul });
 
     cells = makeCells();
     polygons = makePolygons(cells);
@@ -232,8 +213,8 @@
 
   function makeCells(){
     var cells = []
-    for(var i in df){
-      coors = df[i]
+    for(var i in predictCups){
+      coors = predictCups[i]
       const cellCoords = [
       { lat: coors['lat1'], lng: coors['long1'] },
       { lat: coors['lat2'], lng: coors['long2'] },
@@ -286,7 +267,6 @@
         zIndex: parseInt(i),
         label: {text : 'pre_cup', fontSize : '0px'}
       });
-      center.addListener("click", moveToDiv);
       polygon_centers.push(center);
     }
     return polygon_centers;
@@ -299,13 +279,13 @@
     type: "poly"
     };
 
-    for (var i in pc) {
-      const precup = pc[i];
+    for (var i in presentCups) {
+      const precup = presentCups[i];
       var pre_cup = new google.maps.Marker({
-        position: { lat: precup['fields']['lat'], lng: precup['fields']['long'] },
+        position: { lat: precup['lat'], lng: precup['long'] },
         map,
         icon: '/static/assets/img/map/orange_cup_resize2.png',
-        title: pc[i]['pk'],
+        title: presentCups[i]['id'],
         zIndex: parseInt(i),
         label: {text : 'pre_cup', fontSize : '0px'}
       });
@@ -327,10 +307,13 @@
   }
 
   function moveToDiv(){
-    label = this.getLabel()['text'];
-    
+      label = this.getLabel()['text'];
+      title = this.getTitle();
+      index = this.getZIndex();
+      // console.log(label, title, index);
+
+
   }
-  
   $( document ).ready( function() {
     $('#cellOnly').click( function() {
       setMapOnAll(polygon_centers, map);
