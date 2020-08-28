@@ -1,0 +1,61 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Opinion {% endblock title %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+        function tableFn(){
+            $('#mydiv').load('see')
+        }
+        function pFormFn(){
+            $('#mydiv').load('insert')
+        }
+    </script>
+    <style>
+    body {
+        background-image: url('/static/assets/img/opinion/bamboo.jpg');
+    }
+    {% comment %} div.container {
+        font-family: 'Do Hyeon', sans-serif;
+    } {% endcomment %}
+    div.container {
+        font-family: 'Nanum Myeongjo', serif;
+    }
+    </style>
+ </head>
+<body>
+{% comment %} <div class="header bg-gradient-primary pb-8 pt-6 md-8"> {% endcomment %}
+    <div class="container">
+    <br><br><br>
+        <div class="jumbotron" style="background-color: white;">
+          <h1><b>시민 의견란</b></h1>
+          <br>
+          <h3><b>함께 만들어 나가는 일회용컵 전용 수거함</b></h3>
+          <br><br><br>
+          <h4 style="color:DimGrey;"><b>일회용컵 전용 수거함에 대한 의견을 자유롭게 공유해 주세요!</b></h4>
+          <h4 style="color:DimGrey;"><b>시민과 함께 만들어 나가는 깨끗한 거리, 깨끗한 도시, 깨끗한 지구!</b></h4>
+          <br><br><br><br>
+        <a href="#" onclick="pFormFn()" class="btn btn-warning btn-lg text-light" role="button"><b>의견 남기기</b></a>
+        <a href="#" onclick="tableFn()" class="btn btn-success btn-lg" role="button"><b>시민 의견 보기</b></a>
+        <div id="mydiv"></div>
+        <br>
+        </div>
+    </div>
+{% comment %} </div> {% endcomment %}
+</body>
+{% endblock content %}
+
+{% comment %} {% include "includes/footer.html" %} {% endcomment %}
+
+<!-- Specific JS goes HERE --> 
+
+{% block javascripts %}
+{% endblock javascripts %}
