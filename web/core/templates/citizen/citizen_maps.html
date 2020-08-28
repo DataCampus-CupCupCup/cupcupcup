@@ -14,16 +14,16 @@
               </div>
               <input type="text" class="form-control" placeholder="지역구명을 적어주세요. 예) 부산진구" aria-label="Recipient's username" aria-describedby="button-addon2" aria-describedby="addon-wrapping">
               <div class="input-group-append">
-                <button class="btn btn-primary" type="button" id="button-addon2">내 지역구 검색</button>
+                <button class="btn btn-light" type="button" id="button-addon2">내 지역구 검색</button>
               </div>
             </div>
             <div class="ml-2 row pt-1">
               <div class="mr-2 mb-2">
-                <button id='preCupOnly' class="btn btn-secondary">현재 수거함만 보기</button>
-                <button id='cellOnly' class="btn btn-secondary">예상 수거함만 보기</button>
+                <button id='preCupOnly' class="btn btn-primary">현재 수거함만 보기</button>
+                <button id='cellOnly' class="btn btn-slack">예상 수거함만 보기</button>
               </div>
               <div class="col pl-0 pr-4">
-                <button id='both' class="btn btn-slack btn-block ">둘다 보기</button>
+                <button id='both' class="btn btn-warning btn-block ">둘다 보기</button>
               </div>
             </div>
           <div class="col-12">
@@ -98,17 +98,17 @@
       </div>
     </div>
     
-    <div class="container-fluid mt-4">
-      <div class="row">
+    <div class="container-fluid mt-4" >
+      <div id="detail" class="row collapse">
         <div class="col-12">
           <div class="card bg-secondary shadow">
             <div class="card-header bg-white border-0">
               <div class="row align-items-center">
                 <div class="col-8">
-                  <h3 class="mb-0">My account</h3>
+                  <h3 class="mb-0">장소 상세 정보</h3>
                 </div>
                 <div class="col-4 text-right">
-                  <a href="#!" class="btn btn-primary">지도로 가기</a>
+                  <a class="btn btn-primary toTop">지도로 가기</a>
                 </div>
               </div>
             </div>
@@ -283,8 +283,10 @@
         icon: '/static/assets/img/map/green_cup_resize2.png',
         shape: shape,
         title: i,
-        zIndex: parseInt(i)
+        zIndex: parseInt(i),
+        label: {text : 'pre_cup', fontSize : '0px'}
       });
+      center.addListener("click", moveToDiv);
       polygon_centers.push(center);
     }
     return polygon_centers;
@@ -303,10 +305,11 @@
         position: { lat: precup['fields']['lat'], lng: precup['fields']['long'] },
         map,
         icon: '/static/assets/img/map/orange_cup_resize2.png',
-        shape: shape,
         title: pc[i]['pk'],
-        zIndex: parseInt(i)
+        zIndex: parseInt(i),
+        label: {text : 'pre_cup', fontSize : '0px'}
       });
+      pre_cup.addListener("click", moveToDiv);
       pre_cups.push(pre_cup);
     }
     return pre_cups;
@@ -319,10 +322,39 @@
   }
 
   // Removes the markers from the map, but keeps them in the array.
-  function clearMarkers() {
-    setMapOnAll(null);
+  function clearMarkers(markers) {
+    setMapOnAll(markers,null);
+  }
+
+  function moveToDiv(){
+    label = this.getLabel()['text'];
+    
   }
   
+  $( document ).ready( function() {
+    $('#cellOnly').click( function() {
+      setMapOnAll(polygon_centers, map);
+      setMapOnAll(polygons, map);
+      clearMarkers(pre_cups);
+    });
+
+    $('#preCupOnly').click( function() {
+      setMapOnAll(pre_cups, map);
+      clearMarkers(polygon_centers);
+      clearMarkers(polygons);
+    });
+
+    $('#both').click( function() {
+      clearMarkers();
+      setMapOnAll(pre_cups, map);
+      setMapOnAll(polygon_centers, map);
+      setMapOnAll(polygons, map);
+    });
+    
+    $('.toTop').click( function() {
+      
+    });
+  });
 </script>
 
 {% endblock javascripts %}
