@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <title>Title</title>
+</head>
+<body>
+    <div class="container">
+        <table class="table ">
+            <thead>
+                <tr><th>지역</th><th>세부 장소</th><th>이유</th><th>건의사항</th></tr>
+            </thead>
+            <tbody>
+                {% for a,b,c,d in data%}
+                    <tr><td>{{a}}</td><td>{{b}}</td><td>{{c}}</td><td>{{d}}</td><td>{{e}}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

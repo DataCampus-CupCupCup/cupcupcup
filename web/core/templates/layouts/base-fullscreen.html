@@ -1,3 +1,7 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <!--
 
 =========================================================
@@ -31,6 +35,7 @@
   <link href="{% static 'assets/img/brand/favicon.png' %}" rel="icon" type="image/png">
   
   <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
   <link href="/static/assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
@@ -40,49 +45,39 @@
 
   <!-- Specific CSS goes HERE -->
   {% block stylesheets %}{% endblock stylesheets %}
-
 </head>
 
 <body class="bg-default">
+  {% comment %} <div style="background-image: url(/static/assets/img/index/index_background.jpg);"> {% endcomment %}
+    <div class="main-content">
 
-  <div class="main-content">
+      {% include "includes/navigation-fullscreen.html" %}
 
-    {% include "includes/navigation-fullscreen.html" %}
-
-    <!-- Header -->
-    <div class="header bg-gradient-primary py-7 py-lg-8">
-      <div class="container">
-        <div class="header-body text-center mb-7">
-          <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-6">
-              <h1 class="text-white">
-                <a target="_blank" class="text-white"
-                   href="https://www.creative-tim.com/product/argon-dashboard-django">Argon Dashboard Django</a>
-              </h1>
-              <p class="text-lead text-light">
-                UI-Ready open-source admin panel enhanced with database and authentication - 
-                Coded by <a target="_blank" class="text-white" href="https://www.creative-tim.com/">Creative-Tim</a> 
-                and <a target="_blank" class="text-white" href="https://appseed.us">AppSeed</a>.  
-              </p>
+      <!-- Header -->
+      
+      {% comment %} <div class="header bg-gradient-primary py-7 py-lg-8">
+        <div class="container">
+          <div class="header-body text-center mb-7">
+            <div class="row justify-content-center">
+              
             </div>
           </div>
         </div>
+        <div class="separator separator-bottom separator-skew zindex-100">
+          <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+          </svg>
+        </div> {% endcomment %}
+        
+        {% block content %}{% endblock content %}
+
+        {% include "includes/footer-fullscreen.html" %}
+
       </div>
-      <div class="separator separator-bottom separator-skew zindex-100">
-        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
-          <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
-        </svg>
-      </div>
-    </div>
-    
-    {% block content %}{% endblock content %}
-
-    {% include "includes/footer-fullscreen.html" %}
-
-  </div>
-    
-  {% include "includes/scripts-fullscreen.html" %}
-
+        
+      {% include "includes/scripts-fullscreen.html" %}
+    </div> 
+  {% comment %} </div> {% endcomment %}
 </body>
 
 </html>
