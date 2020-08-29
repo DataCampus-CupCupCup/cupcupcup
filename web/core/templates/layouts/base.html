@@ -50,8 +50,16 @@
   {% include "includes/sidenav.html" %}
 
   <div class="main-content">
+    <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+      <div class="container-fluid">
+        <!-- Brand -->
+        <a class="h2 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/">{% block nav %}{% endblock nav %}</a>
+        <!-- Form -->
 
-    {% include "includes/navigation.html" %}
+        <!-- User -->
+        
+      </div>
+    </nav>
 
     {% block content %}{% endblock content %}
 
