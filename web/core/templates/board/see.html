@@ -1,27 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
-    <title>Title</title>
-</head>
-<body>
+<form target="myp">
+  <div class="form-group">
+    <br><br>
     <div class="container">
-        <table class="table ">
+        <table class="table">
             <thead>
-                <tr><th>지역</th><th>세부 장소</th><th>이유</th><th>건의사항</th></tr>
+                <tr><th style = "font-size:17px;">지역구</th><th style = "font-size:17px;">세부 장소</th><th style = "font-size:17px;">이유</th><th style = "font-size:17px;">건의사항</th></tr>
             </thead>
             <tbody>
-                {% for a,b,c,d in data%}
-                    <tr><td>{{a}}</td><td>{{b}}</td><td>{{c}}</td><td>{{d}}</td><td>{{e}}</td></tr>
-                {% endfor %}
+                {% comment %} {% for a,b,c,d in data%} {% endcomment %}
+                    <tr><td style = "font-size:16px;">서울 서대문구</td><td style = "font-size:16px;">신촌역 4번 출구 앞</td><td style = "font-size:16px;">필요할 거 같습니다..</td><td style = "font-size:16px;">설치해 주세요!!</td></tr>
+                    <tr><td style = "font-size:16px;">부산 진구</td><td style = "font-size:16px;">놀이마루 앞</td><td style = "font-size:16px;">일회용컵을 버릴 곳이 마땅히 없습니다ㅠㅠ</td><td style = "font-size:16px;">부산에도 수거함이 많았으면 좋겠어요!</td></tr>
+                {% comment %} {% endfor %} {% endcomment %}
             </tbody>
         </table>
     </div>
-</body>
-</html>
+</form>

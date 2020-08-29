@@ -12,22 +12,35 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script>
-        function tableFn(){
-            $('#mydiv').load('see')
-        }
         function pFormFn(){
             $('#mydiv').load('insert')
+        }
+        function tableFn(){
+            $('#mydiv').load('see')
         }
     </script>
     <style>
     body {
         background-image: url('/static/assets/img/opinion/bamboo.jpg');
     }
-    {% comment %} div.container {
-        font-family: 'Do Hyeon', sans-serif;
-    } {% endcomment %}
+    /* div.container { */
+        /* font-family: 'Do Hyeon', sans-serif; */
+    /* }  */
     div.container {
         font-family: 'Nanum Myeongjo', serif;
+    }
+    div.form {
+        font-family: 'Nanum Myeongjo', serif;
+    }
+    thead {
+        font-family: 'Nanum Myeongjo', serif;
+         /* text-align: center;  */
+        background-color: #F5F5F5;
+        font-weight: bold;
+    }
+    tbody {
+        font-family: 'Nanum Myeongjo', serif;
+         /* font-weight: bold;  */
     }
     </style>
  </head>
@@ -43,8 +56,8 @@
           <h4 style="color:DimGrey;"><b>일회용컵 전용 수거함에 대한 의견을 자유롭게 공유해 주세요!</b></h4>
           <h4 style="color:DimGrey;"><b>시민과 함께 만들어 나가는 깨끗한 거리, 깨끗한 도시, 깨끗한 지구!</b></h4>
           <br><br><br><br>
-        <a href="#" onclick="pFormFn()" class="btn btn-warning btn-lg text-light" role="button"><b>의견 남기기</b></a>
-        <a href="#" onclick="tableFn()" class="btn btn-success btn-lg" role="button"><b>시민 의견 보기</b></a>
+        <a href="#" onclick="pFormFn()" class="btn btn-warning btn-lg text-light" role="button">의견 남기기</a>
+        <a href="#" onclick="tableFn()" class="btn btn-success btn-lg" role="button">시민 의견 보기</a>
         <div id="mydiv"></div>
         <br>
         </div>
