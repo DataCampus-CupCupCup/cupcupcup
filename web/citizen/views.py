@@ -3,6 +3,8 @@ from django.shortcuts import render
 # 리다이렉트 시 사용
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+# ajax 응답
+from django.http import HttpResponse
 
 # 모델 불러오기
 from .models import PresentCup, PredictCup
@@ -48,6 +50,38 @@ def manage(request, gu='서초구'):
     context = { "presentCups" : presentCups, 'cnt1' : len(presentCups), 'predictCups': predictCups, 'cnt2': len(predictCups)}
 
     return render(request, 'citizen/manage.html', context)
+
+def post_like(request):
+    id = request.POST.get('id', None) # ajax 통신을 통해서 template에서 POST방식으로 전달
+    label = request.POST.get('label', None) # ajax 통신을 통해서 template에서 POST방식으로 전달
+
+    row = None
+    if label == 'predictCups': row = PredictCup.objects.get(id=id)
+    else : row = PresentCup.objects.get(id=id)
+
+    row.like += 1
+    row.save()
+
+    context = {'like_count': row.like }
+    
+    return HttpResponse(json.dumps(context), content_type="application/json")
+    # context를 json 타입으로
+
+def post_dislike(request):
+    id = request.POST.get('id', None) # ajax 통신을 통해서 template에서 POST방식으로 전달
+    label = request.POST.get('label', None) # ajax 통신을 통해서 template에서 POST방식으로 전달
+
+    row = None
+    if label == 'predictCups': row = PredictCup.objects.get(id=id)
+    else : row = PresentCup.objects.get(id=id)
+
+    row.dislike += 1
+    row.save()
+    
+    context = {'dislike_count': row.dislike }
+    
+    return HttpResponse(json.dumps(context), content_type="application/json")
+    # context를 json 타입으로
     
 
 # csv to DB

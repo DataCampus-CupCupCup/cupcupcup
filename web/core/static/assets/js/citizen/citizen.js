@@ -175,7 +175,10 @@ function moveToDiv(){
     address = cup['address'];
     like = cup['like'];
     dislike = cup['dislike'];
-
+    id = cup['id'];
+    
+    $("#id").val(id);
+    $("#label").val(label);
     $("#address").text(address);   
     $("#good").text(like);   
     $("#bad").text(dislike);
@@ -222,16 +225,6 @@ $( document ).ready( function() {
     $('.toMap').click( function() {
         $('#detail').addClass("collapse");
         $('#map')[0].scrollIntoView({behavior: "smooth"});
-    });
-
-    $('#like').click( function(){
-        like=Number($('#good').text());
-        $('#good').text(like+1);
-    });
-
-    $('#dislike').click( function(){
-        dislike=Number($('#bad').text());
-        $('#bad').text(dislike+1);
     });
 
     $('#search').click( function(){

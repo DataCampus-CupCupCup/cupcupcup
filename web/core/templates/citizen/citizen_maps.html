@@ -20,9 +20,9 @@
             <div class="ml-2 row pt-1">
               <div class="mr-2 mb-2">
                 <button id='preCupOnly' class="btn btn-primary">현재 수거함만 보기</button>
-                <button id='cellOnly' class="btn btn-slack">예상 수거함만 보기</button>
+                <button id='cellOnly' class="btn btn-slack">설치 최적 위치만 보기</button>
               </div>
-              <div class="col pl-0 pr-4">
+              <div class="col pl-0">
                 <button id='both' class="btn btn-warning btn-block ">둘다 보기</button>
               </div>
             </div>
@@ -88,6 +88,8 @@
     
     <div class="container-fluid mt-4">
       <div id="detail" class="row collapse">
+        <input id="id" type="hidden" value="">
+        <input id="label" type="hidden" value="">
         <div class="col-12">
           <div class="card bg-secondary shadow">
             <div class="card-header bg-white border-0">
@@ -148,22 +150,20 @@
                   </div>
                 </div>
               </div>
-                <hr class="my-4" />
-                <!-- Address -->
-                <h6 class="heading text-muted mb-4">이 위치가 마음에 드시나요?</h6>
-                <div class="row row-col-3">
-                  <div class="col">
-                    <button type="button" id="like" class="btn btn-warning btn-block"><i class="far fa-thumbs-up"></i> 좋아요</button>
-                  </div>
-                  <div class="col">
-                    <button type="button" id="dislike" class="btn btn-twitter btn-block"><i class="far fa-thumbs-down"></i> 싫어요</button>
-                  </div>
-                  <div class="col mt-3 mt-lg-0">
-                    <a href="/opinion"><button type="button" id="opinion" class="btn btn-neutral btn-block"><i class="fas fa-pencil-alt"></i> 자세한 의견 작성하러 가기</button></a>
-                  </div>
+              <hr class="my-4" />
+              <!-- Address -->
+              <h6 class="heading text-muted mb-4">이 위치가 마음에 드시나요?</h6>
+              <div class="row row-col-3">
+                <div class="col">
+                  <button type="button" id="like" class="btn btn-warning btn-block"><i class="far fa-thumbs-up"></i> 좋아요</button>
                 </div>
-                
-              
+                <div class="col">
+                  <button type="button" id="dislike" class="btn btn-twitter btn-block"><i class="far fa-thumbs-down"></i> 싫어요</button>
+                </div>
+                <div class="col mt-3 mt-lg-0">
+                  <a href="/opinion"><button type="button" id="opinion" class="btn btn-neutral btn-block"><i class="fas fa-pencil-alt"></i> 자세한 의견 작성하러 가기</button></a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -181,4 +181,44 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMkWvo1fWXALAlUAbyXEB_lSquL2ibfx0&callback=initMap&region=kr"></script>
 <script src="/static/assets/js/citizen/citizen.js"></script>
+<script type="text/javascript">
+$( document ).ready( function() {
+  $('#like').click( function(){
+        // like=Number($('#good').text());
+        // $('#good').text(like+1);
+    let id = $("#id").val();
+    let label = $("#label").val();
+    
+    $.ajax({ // .like 버튼을 클릭하면 <새로고침> 없이 ajax로 서버와 통신하겠다.
+      type: "POST", // 데이터를 전송하는 방법을 지정
+      url: "{% url 'post_like' %}", // 통신할 url을 지정
+      data: {'id': id, 'label':label, 'csrfmiddlewaretoken': '{{ csrf_token }}'}, // 서버로 데이터 전송시 옵션
+      dataType: "json", // 서버측에서 전송한 데이터를 어떤 형식의 데이터로서 해석할 것인가를 지정, 없으면 알아서 판단
+      // 서버측에서 전송한 Response 데이터 형식 (json)
+      // {'likes_count': post.like_count, 'message': message }
+      success: function(response){ // 통신 성공시 - 동적으로 좋아요 갯수 변경, 유저 목록 변경
+        $("#good").text(response.like_count);
+      },
+    });
+  });
+  $('#dislike').click( function(){
+        // like=Number($('#good').text());
+        // $('#good').text(like+1);
+    let id = $("#id").val();
+    let label = $("#label").val();
+    
+    $.ajax({ // .like 버튼을 클릭하면 <새로고침> 없이 ajax로 서버와 통신하겠다.
+      type: "POST", // 데이터를 전송하는 방법을 지정
+      url: "{% url 'post_dislike' %}", // 통신할 url을 지정
+      data: {'id': id, 'label':label, 'csrfmiddlewaretoken': '{{ csrf_token }}'}, // 서버로 데이터 전송시 옵션
+      dataType: "json", // 서버측에서 전송한 데이터를 어떤 형식의 데이터로서 해석할 것인가를 지정, 없으면 알아서 판단
+      // 서버측에서 전송한 Response 데이터 형식 (json)
+      // {'likes_count': post.like_count, 'message': message }
+      success: function(response){ // 통신 성공시 - 동적으로 좋아요 갯수 변경, 유저 목록 변경
+        $("#bad").text(response.dislike_count);
+      },
+    });
+  });
+});
+</script>
 {% endblock javascripts %}
