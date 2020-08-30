@@ -1,6 +1,9 @@
 {% extends 'layouts/base.html' %}
 
 {% block title %} Maps {% endblock title %}
+{% block stylesheets %}
+<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
+{% endblock stylesheets %}
 {% block nav %}내 지역구 보기{% endblock nav %}
 {% block content %}
 
@@ -20,9 +23,9 @@
             <div class="ml-2 row pt-1">
               <div class="mr-2 mb-2">
                 <button id='preCupOnly' class="btn btn-primary">현재 수거함만 보기</button>
-                <button id='cellOnly' class="btn btn-slack">예상 수거함만 보기</button>
+                <button id='cellOnly' class="btn btn-slack">설치 최적 위치만 보기</button>
               </div>
-              <div class="col pl-0 pr-4">
+              <div class="col pl-0">
                 <button id='both' class="btn btn-warning btn-block ">둘다 보기</button>
               </div>
             </div>
@@ -93,17 +96,17 @@
               <div class="row align-items-center">
                 <div class="col">
                   <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
-                  <h2 class="mb-0">재활용 되는 플라스틱 컵 수</h2>
+                  <h2 class="mb-0">수거함 쓰레기 수거량</h2>
                 </div>
                 <div class="col">
                   <ul class="nav nav-pills justify-content-end">
-                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="" data-suffix="M">
+                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix=" " data-suffix="M">
                       <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
                         <span class="d-none d-md-block">Month</span>
                         <span class="d-md-none">M</span>
                       </a>
                     </li>
-                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[10, 200, 55, 255, 105, 305, 155, 400, 400]}]}}' data-prefix="" data-suffix="">
+                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[10, 200, 55, 255, 105, 305, 155, 400, 400]}]}}' data-prefix=" " data-suffix=" ">
                       <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
                         <span class="d-none d-md-block">Week</span>
                         <span class="d-md-none">W</span>
@@ -128,7 +131,7 @@
               <div class="row align-items-center">
                 <div class="col">
                   <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
-                  <h2 class="mb-0">월별 컵 수거함</h2>
+                  <h2 class="mb-0">월별 수거함 설치 대수</h2>
                 </div>
               </div>
             </div>
@@ -211,8 +214,8 @@
         <div class="card-header border-0">
           <h3 class="mb-0">수거함 목록</h3>
         </div>
-        <div class="table-responsive">
-          <table class="table align-items-center table-flush">
+        <div class="table-responsive col-12 m-auto">
+          <table id="cup_table" class="table align-items-center table-flush">
             <thead class="thead-light">
               <tr>
                 <th scope="col">ID</th>
@@ -223,40 +226,25 @@
               </tr>
             </thead>
             <tbody>
+              {% if presentCups %}
+              {% for cup in presentCups %}
               <tr>
                 <th scope="row">
                   <div class="media align-items-center">
-                    <a href="#" class="avatar rounded-circle mr-3">
-                      <img alt="Image placeholder" src="/static/assets/img/theme/bootstrap.jpg">
-                    </a>
+                    <img alt="Image placeholder" width="23" src="/static/assets/img/map/orange_cup_resize2.png">&nbsp;
                     <div class="media-body">
-                      <span class="mb-0 text-sm">Argon Design System</span>
+                      <span class="mb-0 text-sm">{{cup.id}}</span>
                     </div>
                   </div>
                 </th>
                 <td>
-                  $2,500 USD
+                  {{cup.address}}
                 </td>
-                <td>
-                  <span class="badge badge-dot mr-4">
-                    <i class="bg-warning"></i> pending
-                  </span>
+                <td class='text-center'>
+                  {{cup.like}}
                 </td>
-                <td>
-                  <div class="avatar-group">
-                    <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                      <img alt="Image placeholder" src="/static/assets/img/theme/team-1-800x800.jpg" class="rounded-circle">
-                    </a>
-                    <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
-                      <img alt="Image placeholder" src="/static/assets/img/theme/team-2-800x800.jpg" class="rounded-circle">
-                    </a>
-                    <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
-                      <img alt="Image placeholder" src="/static/assets/img/theme/team-3-800x800.jpg" class="rounded-circle">
-                    </a>
-                    <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
-                      <img alt="Image placeholder" src="/static/assets/img/theme/team-4-800x800.jpg" class="rounded-circle">
-                    </a>
-                  </div>
+                <td class='text-center'>
+                  {{cup.dislike}}
                 </td>
                 <td class="text-right">
                   <div class="dropdown">
@@ -270,6 +258,42 @@
                   </div>
                 </td>
               </tr>
+              {% endfor%}
+            {% endif %}
+            {% if predictCups%}
+              {% for cup in predictCups %}
+              <tr>
+                <th scope="row">
+                  <div class="media align-items-center">
+                      <img alt="Image placeholder" width="23" src="/static/assets/img/map/green_cup_resize2.png">&nbsp;
+                    <div class="media-body">
+                      <span class="mb-0 text-sm">{{cup.id}}</span>
+                    </div>
+                  </div>
+                </th>
+                <td>
+                  {{cup.address}}
+                </td>
+                <td class='text-center'>
+                  {{cup.like}}
+                </td>
+                <td class='text-center'>
+                  {{cup.dislike}}
+                </td>
+                <td class="text-right">
+                  <div class="dropdown">
+                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                      <a class="dropdown-item" href="#">관련 의견 보기</a>
+                      <a class="dropdown-item" href="#">수거율 보기</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {% endfor%}
+            {% endif %}
             </tbody>
           </table>
         </div>
@@ -287,6 +311,12 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMkWvo1fWXALAlUAbyXEB_lSquL2ibfx0&callback=initMap&region=kr"></script>
 <script src="/static/assets/js/citizen/citizen.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script >
+  $(document).ready( function () {
+    $('#cup_table').DataTable();
+  });
 </script>
 
 {% endblock javascripts %}
