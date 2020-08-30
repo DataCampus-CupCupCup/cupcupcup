@@ -9,5 +9,6 @@ urlpatterns = [
     path('citizen_map/<str:gu>/', views.citizen_map, name='citizen_map_search'),
     path('manage/', views.manage, name='manage'),
     path('manage/<str:gu>/', views.manage, name='manage_search'),
+    path('our_team/', views.our_team, name='our_team'),
     # path('insert/', views.insert, name='insert'),
 ]

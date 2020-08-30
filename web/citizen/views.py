@@ -22,6 +22,9 @@ def index(request):
 def map(request):
     return render(request, 'maps.html')
 
+def our_team(request):
+    return render(request, 'maker.html')
+
 def citizen_map(request, gu='서초구'):
     id_start = 's'
     if gu=='서대문구': id_start = 'sd'
