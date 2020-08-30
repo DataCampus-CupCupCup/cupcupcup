@@ -5,7 +5,7 @@
 {% block content %}
 
     <!-- Header -->
-    <div class="header bg-gradient-primary pb-8 pt-6 md-8">
+    <div class="header bg-gradient-indigo pb-8 pt-6 md-8">
       <div class="container-fluid">
         <div class="row row-cols-sm-2">
             <div class="col-xl-6 input-group mb-3">
@@ -81,13 +81,67 @@
               </div>
             </div>
           </div>
-          
         </div>
       </div>
     </div>
     
-    <div class="container-fluid mt-4">
-      <div id="detail" class="row collapse">
+    <div class="container-fluid my-4">
+      <div class="row mt-3">
+        <div class="col-xl-8 mb-5 mb-xl-0">
+          <div class="card shadow">
+            <div class="card-header bg-transparent">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
+                  <h2 class="mb-0">재활용 되는 플라스틱 컵 수</h2>
+                </div>
+                <div class="col">
+                  <ul class="nav nav-pills justify-content-end">
+                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="" data-suffix="M">
+                      <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
+                        <span class="d-none d-md-block">Month</span>
+                        <span class="d-md-none">M</span>
+                      </a>
+                    </li>
+                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[10, 200, 55, 255, 105, 305, 155, 400, 400]}]}}' data-prefix="" data-suffix="">
+                      <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
+                        <span class="d-none d-md-block">Week</span>
+                        <span class="d-md-none">W</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <!-- Chart -->
+              <div class="chart">
+                <!-- Chart wrapper -->
+                <canvas id="chart-sales" class="chart-canvas"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4">
+          <div class="card shadow">
+            <div class="card-header bg-transparent">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
+                  <h2 class="mb-0">월별 컵 수거함</h2>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <!-- Chart -->
+              <div class="chart">
+                <canvas id="chart-orders" class="chart-canvas"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="detail" class="row my-4 collapse">
         <div class="col-12">
           <div class="card bg-secondary shadow">
             <div class="card-header bg-white border-0">
@@ -148,24 +202,76 @@
                   </div>
                 </div>
               </div>
-                <hr class="my-4" />
-                <!-- Address -->
-                <h6 class="heading text-muted mb-4">이 위치가 마음에 드시나요?</h6>
-                <div class="row row-col-3">
-                  <div class="col">
-                    <button type="button" id="like" class="btn btn-warning btn-block"><i class="far fa-thumbs-up"></i> 좋아요</button>
-                  </div>
-                  <div class="col">
-                    <button type="button" id="dislike" class="btn btn-twitter btn-block"><i class="far fa-thumbs-down"></i> 싫어요</button>
-                  </div>
-                  <div class="col mt-3 mt-lg-0">
-                    <a href="/opinion"><button type="button" id="opinion" class="btn btn-neutral btn-block"><i class="fas fa-pencil-alt"></i> 자세한 의견 작성하러 가기</button></a>
-                  </div>
-                </div>
-                
-              
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="card mt-4 shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0">수거함 목록</h3>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">주소</th>
+                <th scope="col">긍적적</th>
+                <th scope="col">부정적</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <a href="#" class="avatar rounded-circle mr-3">
+                      <img alt="Image placeholder" src="/static/assets/img/theme/bootstrap.jpg">
+                    </a>
+                    <div class="media-body">
+                      <span class="mb-0 text-sm">Argon Design System</span>
+                    </div>
+                  </div>
+                </th>
+                <td>
+                  $2,500 USD
+                </td>
+                <td>
+                  <span class="badge badge-dot mr-4">
+                    <i class="bg-warning"></i> pending
+                  </span>
+                </td>
+                <td>
+                  <div class="avatar-group">
+                    <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
+                      <img alt="Image placeholder" src="/static/assets/img/theme/team-1-800x800.jpg" class="rounded-circle">
+                    </a>
+                    <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
+                      <img alt="Image placeholder" src="/static/assets/img/theme/team-2-800x800.jpg" class="rounded-circle">
+                    </a>
+                    <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
+                      <img alt="Image placeholder" src="/static/assets/img/theme/team-3-800x800.jpg" class="rounded-circle">
+                    </a>
+                    <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+                      <img alt="Image placeholder" src="/static/assets/img/theme/team-4-800x800.jpg" class="rounded-circle">
+                    </a>
+                  </div>
+                </td>
+                <td class="text-right">
+                  <div class="dropdown">
+                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                      <a class="dropdown-item" href="#">관련 의견 보기</a>
+                      <a class="dropdown-item" href="#">수거율 보기</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
       {{ presentCups|json_script:"presentCups" }}
@@ -181,4 +287,6 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMkWvo1fWXALAlUAbyXEB_lSquL2ibfx0&callback=initMap&region=kr"></script>
 <script src="/static/assets/js/citizen/citizen.js"></script>
+</script>
+
 {% endblock javascripts %}

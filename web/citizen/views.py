@@ -26,21 +26,25 @@ def citizen_map(request, gu='서초구'):
     id_start = 's'
     if gu=='서대문구': id_start = 'sd'
     elif gu=='강남구' :  id_start = 'gn'
-    
-    # 이 부분을 DB에서 가져오게끔 아래 주석으로 바꾸면 됩니다.
-    # predictCups = pd.read_csv('./citizen/real_seocho.csv', encoding='utf-8')
-    # predictCups_json = json.dumps(df.head().to_dict('index'))
+
     predictCups = list(PredictCup.objects.filter(id__startswith=id_start).values())
     presentCups = list(PresentCup.objects.filter(id__startswith=id_start).values())
-    
-    # print(predictCups.values())
-    # javascript 에서 사용하기 위해 json으로 줄것
-    predictCups_json = json.dumps(predictCups)
-    presentCups_json = json.dumps(presentCups)
 
-    context = { "presentCups" : presentCups_json, 'cnt1' : len(presentCups), 'predictCups': predictCups_json, 'cnt2': len(predictCups)}
+    context = { "presentCups" : presentCups, 'cnt1' : len(presentCups), 'predictCups': predictCups, 'cnt2': len(predictCups)}
 
     return render(request, 'citizen/citizen_maps.html', context)
+
+def manage(request, gu='서초구'):
+    id_start = 's'
+    if gu=='서대문구': id_start = 'sd'
+    elif gu=='강남구' :  id_start = 'gn'
+
+    predictCups = list(PredictCup.objects.filter(id__startswith=id_start).values())
+    presentCups = list(PresentCup.objects.filter(id__startswith=id_start).values())
+
+    context = { "presentCups" : presentCups, 'cnt1' : len(presentCups), 'predictCups': predictCups, 'cnt2': len(predictCups)}
+
+    return render(request, 'citizen/manage.html', context)
     
 
 # csv to DB
