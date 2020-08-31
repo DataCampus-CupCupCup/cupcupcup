@@ -21,8 +21,16 @@ import json
 def index(request):
     return render(request, 'index.html')
 
-def map(request):
-    return render(request, 'maps.html')
+def login(request):
+    return render(request, 'login.html')
+
+def logout(request):
+    request.session.flush()
+    return HttpResponseRedirect(reverse(index))
+
+def check_account(request):
+    request.session['auth'] = 1
+    return manage(request)
 
 def our_team(request):
     return render(request, 'maker.html')
@@ -39,6 +47,15 @@ def citizen_map(request, gu='서초구'):
 
     return render(request, 'citizen/citizen_maps.html', context)
 
+def check_login(function):
+    def wrapper(request, *args, **kwargs):
+        auth = request.session.get('auth',0)
+    
+        if auth == 0 : return login(request)
+        else : return function(request, *args, **kwargs)
+    return wrapper
+
+@check_login
 def manage(request, gu='서초구'):
     id_start = 's'
     if gu=='서대문구': id_start = 'sd'
@@ -83,6 +100,8 @@ def post_dislike(request):
     return HttpResponse(json.dumps(context), content_type="application/json")
     # context를 json 타입으로
     
+
+        
 
 # csv to DB
 # def insert(request):
