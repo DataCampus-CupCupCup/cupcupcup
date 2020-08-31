@@ -105,18 +105,17 @@ def post_dislike(request):
 
 # csv to DB
 # def insert(request):
-#     df = pd.read_csv('./citizen/sucho_cup_DB_detail_address.csv', encoding='utf-8')
+#     df = pd.read_csv('./citizen/final_presentcup.csv', encoding='utf-8')
 
 #     df.apply(makePresentCup, axis=1)
 
 #     print(PresentCup.objects.all())
-#     return render(request, 'maps.html')
+#     return render(request, 'index.html')
 
 # def makePresentCup(df):
-    # ['lat', 'long', 'id', 'like', 'address', 'dislike']
-    # pc_instance = PresentCup(id=df.id, long=df.long, lat= df.lat, address=df.address, dislike=df.dirty, like=df.like)
-    # pc_instance.save()
-
+#     ['lat', 'long', 'id', 'like', 'address', 'dislike']
+#     pc_instance = PresentCup(id=df.id, long=df.long, lat= df.lat, address=df.address, dislike=df.dislike, like=df.like)
+#     pc_instance.save()
 
 # 예측
 # def insert(request):
