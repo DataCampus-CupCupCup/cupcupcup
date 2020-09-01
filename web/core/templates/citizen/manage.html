@@ -4,7 +4,7 @@
 {% block stylesheets %}
 <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
 {% endblock stylesheets %}
-{% block nav %}내 지역구 보기{% endblock nav %}
+{% block nav %}지역구 수거함 보기{% endblock nav %}
 {% block content %}
 
     <!-- Header -->
@@ -210,12 +210,13 @@
         </div>
       </div>
 
+      {% if presentCups %}
       <div class="card mt-4 shadow">
         <div class="card-header border-0">
           <h3 class="mb-0">수거함 목록</h3>
         </div>
         <div class="table-responsive col-12 m-auto">
-          <table id="cup_table" class="table align-items-center table-flush">
+          <table id="present_cup_table" class="table align-items-center table-flush">
             <thead class="thead-light">
               <tr>
                 <th scope="col">ID</th>
@@ -226,7 +227,6 @@
               </tr>
             </thead>
             <tbody>
-              {% if presentCups %}
               {% for cup in presentCups %}
               <tr>
                 <th scope="row">
@@ -259,8 +259,29 @@
                 </td>
               </tr>
               {% endfor%}
-            {% endif %}
-            {% if predictCups%}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if predictCups%}
+      <div class="card mt-4 shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0">수거함 최적 위치 목록</h3>
+        </div>
+        <div class="table-responsive col-12 m-auto">
+          <table id="predict_cup_table" class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">주소</th>
+                <th scope="col">긍적적</th>
+                <th scope="col">부정적</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
               {% for cup in predictCups %}
               <tr>
                 <th scope="row">
@@ -293,11 +314,11 @@
                 </td>
               </tr>
               {% endfor%}
-            {% endif %}
             </tbody>
           </table>
         </div>
       </div>
+      {% endif %}
       {{ presentCups|json_script:"presentCups" }}
       {{ predictCups|json_script:"predictCups" }}
       {% include "includes/footer.html" %}
@@ -315,7 +336,8 @@
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script >
   $(document).ready( function () {
-    $('#cup_table').DataTable();
+    $('#present_cup_table').DataTable();
+    $('#predict_cup_table').DataTable();
   });
 </script>
 

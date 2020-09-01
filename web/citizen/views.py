@@ -21,8 +21,16 @@ import json
 def index(request):
     return render(request, 'index.html')
 
-def map(request):
-    return render(request, 'maps.html')
+def login(request):
+    return render(request, 'login.html')
+
+def logout(request):
+    request.session.flush()
+    return HttpResponseRedirect(reverse(index))
+
+def check_account(request):
+    request.session['auth'] = 1
+    return manage(request)
 
 def our_team(request):
     return render(request, 'maker.html')
@@ -39,6 +47,15 @@ def citizen_map(request, gu='서초구'):
 
     return render(request, 'citizen/citizen_maps.html', context)
 
+def check_login(function):
+    def wrapper(request, *args, **kwargs):
+        auth = request.session.get('auth',0)
+    
+        if auth == 0 : return login(request)
+        else : return function(request, *args, **kwargs)
+    return wrapper
+
+@check_login
 def manage(request, gu='서초구'):
     id_start = 's'
     if gu=='서대문구': id_start = 'sd'
@@ -82,31 +99,30 @@ def post_dislike(request):
     
     return HttpResponse(json.dumps(context), content_type="application/json")
     # context를 json 타입으로
-    
+        
 
 # csv to DB
 # def insert(request):
-#     df = pd.read_csv('./citizen/sucho_cup_DB_detail_address.csv', encoding='utf-8')
+#     df = pd.read_csv('./citizen/final_presentcup.csv', encoding='utf-8')
 
 #     df.apply(makePresentCup, axis=1)
 
 #     print(PresentCup.objects.all())
-#     return render(request, 'maps.html')
+#     return render(request, 'index.html')
 
 # def makePresentCup(df):
-    # ['lat', 'long', 'id', 'like', 'address', 'dislike']
-    # pc_instance = PresentCup(id=df.id, long=df.long, lat= df.lat, address=df.address, dislike=df.dirty, like=df.like)
-    # pc_instance.save()
+#     ['lat', 'long', 'id', 'like', 'address', 'dislike']
+#     pc_instance = PresentCup(id=df.id, long=df.long, lat= df.lat, address=df.address, dislike=df.dislike, like=df.like)
+#     pc_instance.save()
 
-
-# 예측
+# # 예측
 # def insert(request):
-#     df = pd.read_csv('./citizen/gangnam_predict.csv', encoding='EUC-KR')
+#     df = pd.read_csv('./citizen/final_predictcupGangman.csv')
 
 #     df.apply(makePredictCup, axis=1)
 
 #     print(PredictCup.objects.all())
-#     return render(request, 'maps.html')
+#     return render(request, 'index.html')
 
 # def makePredictCup(df):
 #     # ['id', lat1', 'long1','lat2', 'long2','lat3', 'long3','lat4', 'long4', 'id', 'dislike','like', 'address']
