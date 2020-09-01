@@ -4,7 +4,6 @@ from citizen import views
 urlpatterns = [
     # 첫 페이지 page
     path('', views.index, name='home'),
-    # path('insert/', views.insert, name='insert'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
     path('check_account/', views.check_account, name='check_account'),

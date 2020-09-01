@@ -99,8 +99,6 @@ def post_dislike(request):
     
     return HttpResponse(json.dumps(context), content_type="application/json")
     # context를 json 타입으로
-    
-
         
 
 # csv to DB
@@ -117,14 +115,14 @@ def post_dislike(request):
 #     pc_instance = PresentCup(id=df.id, long=df.long, lat= df.lat, address=df.address, dislike=df.dislike, like=df.like)
 #     pc_instance.save()
 
-# 예측
+# # 예측
 # def insert(request):
-#     df = pd.read_csv('./citizen/gangnam_predict.csv', encoding='EUC-KR')
+#     df = pd.read_csv('./citizen/final_predictcupGangman.csv')
 
 #     df.apply(makePredictCup, axis=1)
 
 #     print(PredictCup.objects.all())
-#     return render(request, 'maps.html')
+#     return render(request, 'index.html')
 
 # def makePredictCup(df):
 #     # ['id', lat1', 'long1','lat2', 'long2','lat3', 'long3','lat4', 'long4', 'id', 'dislike','like', 'address']
