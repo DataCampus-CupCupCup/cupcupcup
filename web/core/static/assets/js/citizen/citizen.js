@@ -29,7 +29,7 @@ function initMap(){
     }
 
     map = new google.maps.Map( document.getElementById('map'), { zoom: 13, center: center });
-    smallmap = new google.maps.Map( document.getElementById('smallmap'), { zoom: 17, center: center });
+    smallmap = new google.maps.Map( document.getElementById('smallmap'), { zoom: 16, center: center });
 
     cells = makeCells();
     polygons = makePolygons(cells);
@@ -72,12 +72,6 @@ function makePolygons(cells){
 }
 
 function makePolygonCenters(cells, map){
-    var polygon_centers = [];
-    const shape = {
-    coords: [1, 1, 1, 20, 18, 20, 18, 1],
-    type: "poly"
-    };
-
     for(var i in cells){
         var lat =0.0, long =0.0;
         for (var j in cells[i]){
@@ -86,12 +80,12 @@ function makePolygonCenters(cells, map){
         }
         lat = lat/cells[i].length;
         long = long/cells[i].length;
-        // console.log(lat, long);
+        
         var center = new google.maps.Marker({
         position: { lat: lat, lng: long },
         map,
         icon: '/static/assets/img/map/green_cup_resize2.png',
-        shape: shape,
+  
         title: i,
         zIndex: parseInt(i),
         label: {text : 'predictCups', fontSize : '0px'}
@@ -127,6 +121,7 @@ function makePreCups(map) {
 
 function setMapOnAll(markers, map){
     for(var i in markers){
+        console.log(markers[i]);
         markers[i].setMap(map);
     }
 }
@@ -137,6 +132,7 @@ setMapOnAll(markers,null);
 }
 
 function moveToDiv(){
+    console.log('cl');
     if(small_map_components.length !=0){
         clearMarkers(small_map_components);
         small_map_components=[];
@@ -147,24 +143,20 @@ function moveToDiv(){
 
     let cup, marker_image, address, like, dislike, lat, long;
     if(label == 'predictCups'){
+        console.log('1');
         cup = predictCups[index];
         let small_map_polygon = new google.maps.Polygon({
-        paths: [
-        { lat: cup['lat1'], lng: cup['long1'] },
-        { lat: cup['lat2'], lng: cup['long2'] },
-        { lat: cup['lat4'], lng: cup['long4'] },
-        { lat: cup['lat3'], lng: cup['long3'] }
-        ],
-        strokeColor: "#ffe54a",
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: "#ffe54a",
-        fillOpacity: 0.35
-        });
+            paths: cells[index],
+            strokeColor: "#ffe54a",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#ffe54a",
+            fillOpacity: 0.35
+            });
         small_map_components.push(small_map_polygon);
 
-        lat = cup['lat1']+cup['lat2']+cup['lat3']+cup['lat4']/4.0;
-        long = cup['long1']+cup['long2']+cup['long3']+cup['long4']/4.0;
+        lat = (cup['lat1']+cup['lat2']+cup['lat3']+cup['lat4'])/4.0;
+        long = (cup['long1']+cup['long2']+cup['long3']+cup['long4'])/4.0;
         marker_image = '/static/assets/img/map/green_cup_resize2.png';
     }else{
         cup = presentCups[index];
@@ -182,7 +174,7 @@ function moveToDiv(){
     $("#address").text(address);   
     $("#good").text(like);   
     $("#bad").text(dislike);
-
+    console.log(like, dislike);
     let marker_latlnog = { lat: lat, lng: long };
     smallmap.setCenter(marker_latlnog);
 

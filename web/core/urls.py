@@ -21,6 +21,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('opinion/', include('board.urls')), # http.../opinion 이 오면 board에 url로
-    path('manager/', include('manager.urls')), # http.../manager 이 오면 manager에 url로
     path('', include('citizen.urls')), # http.../뒤에 아무것도 안오면 citizen에 url로 -> index 때문에
 ]
